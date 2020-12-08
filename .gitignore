@@ -106,7 +106,10 @@ venv.bak/
 # IDEs
 .vscode
 
-# venv name
+#· venv name
 app/
 .app/
 *.swp
+
+# ds store
+*.DS_Store
