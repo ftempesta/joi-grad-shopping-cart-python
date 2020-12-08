@@ -11,21 +11,29 @@ class ShoppingCart:
     def add_product(self, product):
         self.products.append(product)
 
+    def check_discount(self,product_code):
+        if product_code.startswith('DIS'):
+            num_dis = int(''.join(filter(str.isdigit,product_code))[:2])
+            return num_dis
+        else:
+            return 0
+
+    def calculate_points(self, dicount, price):
+      if dicount == 0:
+        return price / 5
+      else:
+        return price / dicount
+
+    def calculate_price(self, discount, price):
+      return price - (price * discount/100)
+
     def checkout(self):
         total_price = 0.00
         loyalty_points_earned = 0.00
         for product in self.products:
-            discount = 0.00
-            if product.product_code.startswith("DIS_10"):
-                loyalty_points_earned += (product.price / 10)
-                discount = product.price * 0.1
-            elif product.product_code.startswith("DIS_15"):
-                loyalty_points_earned += (product.price / 15)
-                discount = product.price * 0.15
-            else:
-                loyalty_points_earned += (product.price / 5)
-                discount = 0.00
-            total_price += product.price - discount
+            discount = self.check_discount(product.product_code)
+            total_price += self.calculate_price(discount, product.price)
+            loyalty_points_earned += self.calculate_points(discount, product.price)
         return Order(int(loyalty_points_earned), total_price)
 
 
