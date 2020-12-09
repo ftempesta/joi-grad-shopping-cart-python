@@ -11,23 +11,14 @@ class ShoppingCart:
     def add_product(self, product):
         self.products.append(product)
 
-    def dis_10(self):
-        return 10
-
-    def dis_15(self):
-      return 15
-
-    def no_dis(self):
-	    return 0
-
     def check_discount(self,product_code):
-
+        
       switch_discount = {
-          'DIS_10': self.dis_10,
-          'DIS_15': self.dis_15
+          'DIS_10': 10,
+          'DIS_15': 15
         }
 
-      return switch_discount.get(product_code[:6], self.no_dis)()
+      return switch_discount.get(product_code[:6], 0)
 
     def calculate_points(self, dicount, price):
       if dicount == 0:
